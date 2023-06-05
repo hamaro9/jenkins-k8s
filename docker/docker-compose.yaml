@@ -1,0 +1,31 @@
+version: '3'
+services:
+  jenkins:
+    image: my-jenkins
+    restart: always
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9999:8080
+    privileged: true
+  gitea:
+    image: gitea/gitea:latest
+    restart: always
+    volumes:
+      - gitea_data:/data
+    ports:
+      - 3001:3000
+    privileged: true
+  nexus:
+    image: sonatype/nexus3
+    restart: always
+    volumes:
+      - nexus_data:/nexus-data
+    ports:
+      - 8081:8081
+    privileged: true
+volumes:
+  jenkins_home:
+  gitea_data:
+  nexus_data:
